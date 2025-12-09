@@ -1,0 +1,17 @@
+target/
+**/*.rs.bk
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# python / virtualenv leftovers
+.venv/
+venv/
+__pycache__/
+
+# local data
+data/
+
+
