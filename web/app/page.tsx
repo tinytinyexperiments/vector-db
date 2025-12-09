@@ -2,17 +2,17 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center px-6 py-12">
       <div className="w-full max-w-3xl">
-        <header className="mb-10 border-b border-slate-800 pb-6">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+        <header className="mb-10 border-b border-slate-200 pb-6">
+          <h1 className="text-3xl font-semibold tracking-tight text-red-600">
             Self-Healing Vector DB
           </h1>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-red-500">
             A Rust + HNSW + SQLite experimental vector database that can detect
             issues and rebuild itself from durable storage.
           </p>
         </header>
 
-        <section className="space-y-6 text-sm leading-relaxed text-slate-300">
+        <section className="space-y-6 text-sm leading-relaxed text-black">
           <p>
             This project explores what it would look like if a vector database
             could actively maintain its own health. Instead of silently
@@ -29,10 +29,7 @@ export default function HomePage() {
           </p>
 
           <p>
-            The backend is written in Rust using Axum for the HTTP API,{" "}
-            <code className="rounded bg-slate-900 px-1 py-0.5 text-xs">
-              hnsw_rs
-            </code>{" "}
+            The backend is written in Rust using Axum for the HTTP API, hnsw_rs
             for the ANN index, and SQLite for storage. A future iteration will
             plug in an ONNX model or external embedding API so you can index raw
             text instead of precomputed vectors.
