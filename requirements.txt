@@ -1,7 +1,0 @@
-#
-# This project is now Rust-first (see Cargo.toml).
-# Python requirements are left empty on purpose. You can
-# add tooling or experiment dependencies here if needed.
-#
-
-
