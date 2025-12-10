@@ -2,6 +2,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use axum::{
+    body::Body,
     extract::State,
     http::{Request, StatusCode},
     routing::post,
@@ -104,7 +105,7 @@ async fn http_add_and_search_roundtrip() {
         .oneshot(
             Request::post("/add")
                 .header("content-type", "application/json")
-                .body(add_body.into())
+                .body(Body::from(add_body))
                 .unwrap(),
         )
         .await
@@ -123,7 +124,7 @@ async fn http_add_and_search_roundtrip() {
         .oneshot(
             Request::post("/search")
                 .header("content-type", "application/json")
-                .body(search_body.into())
+                .body(Body::from(search_body))
                 .unwrap(),
         )
         .await
