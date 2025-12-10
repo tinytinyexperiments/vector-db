@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile        # Rust Dockerfile
     image: self-healing-vector-db:latest
     container_name: self-healing-vector-db
     environment:
@@ -17,15 +17,14 @@ services:
 
   web:
     build:
-      context: .
-      dockerfile: Dockerfile
-      target: web-runtime
+      context: ./web
+      dockerfile: Dockerfile        # web/Dockerfile (Node/Next)
     image: self-healing-vector-db-web:latest
     container_name: self-healing-vector-db-web
     environment:
-      - PORT=${WEB_PORT:-3001}
+      NEXT_PUBLIC_API_BASE_URL: "http://api:3000"
     ports:
-      - "3001:${WEB_PORT:-3001}"
-    restart: unless-stopped
+      - "3001:3000"                 # host 3001 -> container 3000
     depends_on:
       - api
+    restart: unless-stopped
