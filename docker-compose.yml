@@ -14,3 +14,18 @@ services:
     volumes:
       - ./data:/app/data
     restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web-runtime
+    image: self-healing-vector-db-web:latest
+    container_name: self-healing-vector-db-web
+    environment:
+      - PORT=${WEB_PORT:-3001}
+    ports:
+      - "3001:${WEB_PORT:-3001}"
+    restart: unless-stopped
+    depends_on:
+      - api
