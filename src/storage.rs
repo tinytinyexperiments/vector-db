@@ -92,4 +92,32 @@ impl SqliteVectorStore {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tempfile::tempdir;
+
+    #[test]
+    fn add_and_load_roundtrips_vectors() {
+        let dim = 4;
+        let tmp_dir = tempdir().expect("tempdir");
+        let path = tmp_dir.path().join("vectors.sqlite");
+
+        let store = SqliteVectorStore::new(&StorageConfig { path, dim })
+            .expect("store created");
+
+        let ids = vec![1_i64, 2_i64];
+        let vectors: Vec<f32> = vec![
+            1.0, 0.0, 0.0, 0.0, // id 1
+            0.0, 1.0, 0.0, 0.0, // id 2
+        ];
+
+        store.add(&ids, &vectors).expect("add should succeed");
+
+        let (loaded_ids, loaded_vecs) = store.load_all().expect("load_all");
+        assert_eq!(loaded_ids.len(), 2);
+        assert_eq!(loaded_vecs.len(), vectors.len());
+    }
+}
+
 
