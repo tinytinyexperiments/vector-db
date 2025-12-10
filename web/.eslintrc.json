@@ -1,0 +1,10 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    // You can relax or customize rules here if they get annoying.
+    // Example:
+    // "no-console": "warn"
+  }
+}
+
+
