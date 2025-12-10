@@ -91,4 +91,49 @@ impl HnswIndex {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn insert_and_search_returns_self_as_nearest() {
+        let cfg = IndexConfig {
+            dim: 4,
+            max_elements: 16,
+            m: 8,
+            ef_construction: 16,
+            ef_search: 16,
+        };
+
+        let index = HnswIndex::new(&cfg).expect("index created");
+
+        index
+            .insert(1, vec![1.0, 0.0, 0.0, 0.0])
+            .expect("insert should succeed");
+
+        let neighbors = index
+            .search(&[1.0, 0.0, 0.0, 0.0], 1)
+            .expect("search should succeed");
+
+        assert!(!neighbors.is_empty());
+        assert_eq!(neighbors[0].0, 1);
+    }
+
+    #[test]
+    fn dim_mismatch_on_insert_errors() {
+        let cfg = IndexConfig {
+            dim: 4,
+            max_elements: 16,
+            m: 8,
+            ef_construction: 16,
+            ef_search: 16,
+        };
+
+        let index = HnswIndex::new(&cfg).expect("index created");
+
+        let err = index.insert(1, vec![1.0, 0.0, 0.0]).unwrap_err();
+        matches!(err, IndexError::DimMismatch { expected: 4, got: 3 });
+    }
+}
+
 
